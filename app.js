@@ -131,6 +131,9 @@ app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConfig.isAuthenticated, userController.postUpdateProfile);
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
+app.get('/account/books', passportConfig.isAuthenticated, userController.getBooks);
+app.get('/new', passportConfig.isAuthenticated, bookController.getNewBook);
+app.post('/new', passportConfig.isAuthenticated, bookController.postNewBook);
 
 /**
  * API examples routes.

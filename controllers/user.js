@@ -115,7 +115,7 @@ exports.postSignup = (req, res, next) => {
  */
 exports.getAccount = (req, res) => {
   res.render('account/profile', {
-    title: 'Account Management'
+    title: 'Account Settings'
   });
 };
 
@@ -137,10 +137,10 @@ exports.postUpdateProfile = (req, res, next) => {
   User.findById(req.user.id, (err, user) => {
     if (err) { return next(err); }
     user.email = req.body.email || '';
-    user.profile.name = req.body.name || '';
+    user.profile.full_name = req.body.name || '';
     user.profile.gender = req.body.gender || '';
-    user.profile.location = req.body.location || '';
-    user.profile.website = req.body.website || '';
+    user.profile.location.city = req.body.city || '';
+    user.profile.location.state = req.body.state || '';
     user.save((err) => {
       if (err) {
         if (err.code === 11000) {
@@ -361,3 +361,14 @@ exports.postForgot = (req, res, next) => {
     .then(() => res.redirect('/forgot'))
     .catch(next);
 };
+
+/**
+ * GET /account/books
+ * View and manage books
+ */
+exports.getBooks = (req, res, next)=> {
+  res.render('books/view', {
+      title: 'My book collection',
+      books: req.user.books
+    });
+}

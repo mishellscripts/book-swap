@@ -11,9 +11,9 @@ block content
       .col-sm-7
         input.form-control(type='email', name='email', id='email', value=user.email)
     .form-group
-      label.col-sm-3.control-label(for='name') Name
+      label.col-sm-3.control-label(for='name') Full Name
       .col-sm-7
-        input.form-control(type='text', name='name', id='name', value=user.profile.name)
+        input.form-control(type='text', name='name', id='name', value=user.profile.full_name)
     .form-group
       label.col-sm-3.control-label Gender
       .col-sm-6
@@ -27,13 +27,13 @@ block content
           input(type='radio', checked=user.profile.gender=='other', name='gender', value='other', data-toggle='radio')
           span Other
     .form-group
-      label.col-sm-3.control-label(for='location') Location
+      label.col-sm-3.control-label(for='location') City
       .col-sm-7
-        input.form-control(type='text', name='location', id='location', value=user.profile.location)
-    .form-group
-      label.col-sm-3.control-label(for='website') Website
+        input.form-control(type='text', name='city', id='city', value=user.profile.location.city)
+    .form-group  
+      label.col-sm-3.control-label(for='location') State
       .col-sm-7
-        input.form-control(type='text', name='website', id='website', value=user.profile.website)
+        input.form-control(type='text', name='state', id='state', value=user.profile.location.state)        
     .form-group
       label.col-sm-3.control-label Gravatar
       .col-sm-4

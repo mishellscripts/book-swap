@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  .row
+    .pull-left
+      h1 My books
+      p.lead View and manage your book collection
+    .pull-right
+      a(href='/new') 
+        h1 +
+  hr
+  ul
+    for book in books
+      li= book.title

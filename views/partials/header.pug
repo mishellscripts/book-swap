@@ -7,7 +7,7 @@
         span.icon-bar
         span.icon-bar
       a.navbar-brand(href='/')
-        | ⇌ Book swap
+        | Book swap
     .collapse.navbar-collapse
       ul.nav.navbar-nav
         li(class=(title == 'Home') ? 'active' : undefined)
@@ -27,17 +27,17 @@
                 img(src=user.profile.picture)
               else
                 img(src=user.gravatar(60))
-              span= user.profile.name || user.email || user.id
+              span= user.profile.full_name || user.email || user.id
               i.caret
             ul.dropdown-menu
               li
                 a(href='/account') Account settings
               li.divider
               li
-                a(href='/books') Books shared
+                a(href='/account/books') My book collection
               li.divider
               li 
-                a(href='/trades') View my trades
+                a(href='/account/trades') View my trades
               li.divider
               li
                 a(href='/logout') Logout

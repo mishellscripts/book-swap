@@ -19,11 +19,10 @@ const userSchema = new mongoose.Schema({
       city: String,
       state: String
     },
-    website: String,
     picture: String
   },
 
-  books: [{ type : ObjectId, ref: 'Book' }],
+  books: [Array],
 }, { timestamps: true });
 
 /**
