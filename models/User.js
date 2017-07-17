@@ -10,16 +10,20 @@ const userSchema = new mongoose.Schema({
 
   facebook: String,
   google: String,
-  github: String,
   tokens: Array,
 
   profile: {
-    name: String,
+    full_name: String,
     gender: String,
-    location: String,
+    location: {
+      city: String,
+      state: String
+    },
     website: String,
     picture: String
-  }
+  },
+
+  books: [{ type : ObjectId, ref: 'Book' }],
 }, { timestamps: true });
 
 /**

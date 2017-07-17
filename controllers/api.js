@@ -1,60 +1,28 @@
-const graph = require('fbgraph');
-const GitHub = require('github');
-
+const Twit = require('twit');
 
 /**
- * GET /api
- * List of API examples.
+ * GET /api/twitter
+ * Twitter API example.
  */
-exports.getApi = (req, res) => {
-  res.render('api/index', {
-    title: 'API Examples'
+exports.getTwitter = (req, res, next) => {
+  const token = req.user.tokens.find(token => token.kind === 'twitter');
+  const T = new Twit({
+    consumer_key: process.env.TWITTER_KEY,
+    consumer_secret: process.env.TWITTER_SECRET,
+    access_token: token.accessToken,
+    access_token_secret: token.tokenSecret
   });
-};
-
-/**
- * GET /api/facebook
- * Facebook API example.
- */
-exports.getFacebook = (req, res, next) => {
-  const token = req.user.tokens.find(token => token.kind === 'facebook');
-  graph.setAccessToken(token.accessToken);
-  graph.get(`${req.user.facebook}?fields=id,name,email,first_name,last_name,gender,link,locale,timezone`, (err, results) => {
+  T.get('search/tweets', { q: 'nodejs since:2013-01-01', geocode: '40.71448,-74.00598,5mi', count: 10 }, (err, reply) => {
     if (err) { return next(err); }
-    res.render('api/facebook', {
-      title: 'Facebook API',
-      profile: results
+    res.render('api/twitter', {
+      title: 'Twitter API',
+      tweets: reply.statuses
     });
   });
 };
 
-/**
- * GET /api/github
- * GitHub API Example.
- */
-exports.getGithub = (req, res, next) => {
-  const github = new GitHub();
-  github.repos.get({ owner: 'sahat', repo: 'hackathon-starter' }, (err, repo) => {
-    if (err) { return next(err); }
-    res.render('api/github', {
-      title: 'GitHub API',
-      repo
-    });
+exports.getGoogleBooks = (req, res) => {
+  res.render('api/google-books', {
+    title: 'Google Books API'
   });
-};
-
-/**
- * GET /api/upload
- * File Upload API example.
- */
-
-exports.getFileUpload = (req, res) => {
-  res.render('api/upload', {
-    title: 'File Upload'
-  });
-};
-
-exports.postFileUpload = (req, res) => {
-  req.flash('success', { msg: 'File was uploaded successfully.' });
-  res.redirect('/api/upload');
 };
