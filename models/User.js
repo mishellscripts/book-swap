@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     picture: String
   },
 
-  books: [Array],
+  books: Array,
 }, { timestamps: true });
 
 /**

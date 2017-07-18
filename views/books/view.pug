@@ -9,6 +9,10 @@ block content
       a(href='/new') 
         h1 +
   hr
-  ul
-    for book in books
-      li= book.title
+  if books.length
+    ul
+    each book in books
+      li #{book.title}
+        a(href='#', ng-click='removeBook(book)') Remove
+  else
+    h1 No books found :<

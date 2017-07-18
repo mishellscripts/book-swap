@@ -1,5 +1,6 @@
 const Book = require('../models/Book');
 const User = require('../models/User');
+const books = require('google-books-search');
 
 /**
  * GET /new
@@ -41,3 +42,17 @@ exports.postNewBook = (req, res, next)=> {
     });
   });
 };
+
+exports.getUserBooks = (req, res, next)=> {
+  res.send(req.user.books);
+}
+
+exports.searchBook = (req, res, next)=> {
+  books.search('perks of wlallflower', function(error, results) {
+      if ( ! error ) {
+          res.send(results);
+      } else {
+          console.log(error);
+      }
+  });
+}

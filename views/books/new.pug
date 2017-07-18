@@ -10,11 +10,12 @@ block content
     .form-group
       label.col-sm-3.control-label(for='Title') Title
       .col-sm-7
-        input.form-control(type='title', name='title', id='title', placeholder='Title', autofocus, required)
+        input.form-control(ng-model='title', type='title', name='title', id='title', placeholder='Title', autofocus, required)
     .form-group
       label.col-sm-3.control-label(for='Author') Author
       .col-sm-7
-        input.form-control(type='author', name='author', id='author', placeholder='author', required)
+        input.form-control(ng-model='author', type='author', name='author', id='author', placeholder='author', required)
+    a(ng-click='') Search 
     .form-group
       .col-sm-offset-3.col-sm-7
         button.btn.btn-success(type='submit')

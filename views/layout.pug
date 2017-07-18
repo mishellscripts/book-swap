@@ -1,5 +1,5 @@
 doctype html
-html
+html(ng-app='bookApp')
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
@@ -19,6 +19,7 @@ html
 
     include partials/footer
 
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js')
     script(src='/js/lib/jquery-3.1.1.min.js')
     script(src='/js/lib/bootstrap.min.js')
     script(src='/js/main.js')
