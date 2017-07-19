@@ -15,6 +15,7 @@ html {
 body {
   padding-top: 60px;
   margin-bottom: 75px;
+  font-family: 'Open Sans', sans-serif;
 }
 
 footer {
@@ -27,6 +28,14 @@ footer {
   p, ul {
     margin-bottom: 0;
   }
+}
+
+a, a:hover, a:visited, a:active {
+  color: #d83c30;
+}
+
+button {
+  background-color: #d83c30;
 }
 
 // Input Fields
@@ -61,6 +70,13 @@ textarea {
   box-shadow: 0 0 5px #ccc, inset 0 0 0 #000;
 }
 
+// Font Icons
+// -------------------------
+
+.fa {
+  margin-right: 6px;
+}
+
 // Book list
 // -------------------------
 #book-list {
@@ -70,4 +86,3 @@ textarea {
     margin: 2%;
   }
 }
-

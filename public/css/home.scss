@@ -1,0 +1,31 @@
+body {
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.70), 
+    rgba(255, 255, 255, 0.70)
+  ), url('https://static.pexels.com/photos/486841/pexels-photo-486841.jpeg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: left top;
+}
+
+.main-intro {
+  p {
+    font-size: 5em;
+  }
+  padding: 5% 0%;
+}
+
+.main-description {
+  h2 {
+    color: #d83c30;
+    font-weight: 300;
+  }
+  p {
+    font-size: 1.5em;
+  }
+}
+
+i {
+  color: gray;
+  text-align: center;
+}

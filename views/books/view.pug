@@ -5,9 +5,8 @@ block content
     .pull-left
       h1 My books
       p.lead View and manage your book collection
-    .pull-right
-      a(href='/new') 
-        h1 +
+    a(href='/new') 
+      i.fa.fa-plus-circle.fa-3x(aria-hidden='true')
   hr
   if books.length
     ul#book-list

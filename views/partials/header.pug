@@ -12,8 +12,8 @@
       ul.nav.navbar-nav
         li(class=(title == 'Home') ? 'active' : undefined)
           a(href='/') Home
-        li
-          a(href='/status') Status
+        li(class=(title == 'View') ? 'active' : undefined)
+          a(href='/view') View
       ul.nav.navbar-nav.navbar-right
         if !user
           li(class=(title == 'Login') ? 'active' : undefined)
