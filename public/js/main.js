@@ -1,5 +1,6 @@
 $(document).ready(function() {
-
-  // Place JavaScript code here...
+  $('.remove-book-link').click(()=> {
+    $(this).css('display', 'none');
+  })
 
 });

@@ -1,0 +1,7 @@
+extends ../layout
+
+block content
+  .row
+    .pull-left
+      h1 #{user.profile.full_name}
+      p.lead #{user.profile.location.city}, #{user.profile.location.state}

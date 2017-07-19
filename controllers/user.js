@@ -364,11 +364,23 @@ exports.postForgot = (req, res, next) => {
 
 /**
  * GET /account/books
- * View and manage books
+ * View and manage books page
  */
 exports.getBooks = (req, res, next)=> {
   res.render('books/view', {
-      title: 'My book collection',
-      books: req.user.books
+    title: 'My book collection',
+    books: req.user.books
+  });
+}
+
+/**
+ * GET /profile/userid
+ * User profile page
+ */
+exports.getUserProfile = (req, res, next)=> {
+  User.findById(req.params.userid, (err, result)=> {
+    res.render('users/profile', {
+      user: result
     });
+  })
 }

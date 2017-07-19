@@ -10,9 +10,14 @@ block content
         h1 +
   hr
   if books.length
-    ul
-    each book in books
-      li #{book.title}
-        a(href='#', ng-click='removeBook(book)') Remove
+    ul#book-list
+      each book in books
+        li 
+          p #{book.title}
+          p #{book.author}
+          a(href='/book/' + book._id)
+            img(src=book.imageURL)
+          p 
+            a(href='#', class='remove-book-link') Remove
   else
     h1 No books found :<

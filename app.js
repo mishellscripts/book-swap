@@ -32,7 +32,6 @@ dotenv.load({ path: '.env' });
  */
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
-const apiController = require('./controllers/api');
 const bookController = require('./controllers/book');
 
 /**
@@ -134,14 +133,8 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 app.get('/account/books', passportConfig.isAuthenticated, userController.getBooks);
 app.get('/new', passportConfig.isAuthenticated, bookController.getNewBook);
 app.post('/new', passportConfig.isAuthenticated, bookController.postNewBook);
-app.get('/all', bookController.getUserBooks);
-app.get('/search', bookController.searchBook);
-
-/**
- * API examples routes.
- */
-app.get('/api/googlebooks', passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getGoogleBooks);
-
+app.get('/book/:bookid', bookController.getBookDetail);
+app.get('/profile/:userid', userController.getUserProfile);
 
 /**
  * OAuth authentication routes. (Sign in)
