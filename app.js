@@ -17,9 +17,6 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const expressValidator = require('express-validator');
 const sass = require('node-sass-middleware');
-const multer = require('multer');
-
-const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -53,6 +50,30 @@ mongoose.connection.on('error', (err) => {
   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
   process.exit();
 });
+
+/**
+ * Open socket connection.
+ */
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
+io.on('connection', socket=>{
+  console.log('A user connected');
+
+  let books = [];
+  socket.on('getTitle', title=> {
+    books = bookController.searchBooks(title);
+    console.log(books);
+  });
+
+  socket.emit('searchBooks', books);
+
+  socket.on('disconnect', ()=> {
+    console.log('A user disconnected');
+  });
+});
+
+server.listen(process.env.PORT || 3000);
 
 /**
  * Express configuration.
@@ -128,11 +149,12 @@ app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConfig.isAuthenticated, userController.postUpdateProfile);
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
-app.get('/account/books', passportConfig.isAuthenticated, userController.getBooks);
+app.get('/account/books', passportConfig.isAuthenticated, bookController.getUserBooks);
 app.get('/new', passportConfig.isAuthenticated, bookController.getNewBook);
 app.post('/new', passportConfig.isAuthenticated, bookController.postNewBook);
 app.get('/book/:bookid', bookController.getBookDetail);
 app.get('/profile/:userid', userController.getUserProfile);
+app.get('/view', passportConfig.isAuthenticated, bookController.getAllBooks);
 
 /**
  * OAuth authentication routes. (Sign in)
@@ -153,10 +175,10 @@ app.use(errorHandler());
 
 /**
  * Start Express server.
- */
+ *
 app.listen(app.get('port'), () => {
   console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env')); 
   console.log('  Press CTRL-C to stop\n');
-});
+});*/
 
 module.exports = app;

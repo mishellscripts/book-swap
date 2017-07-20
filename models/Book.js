@@ -5,7 +5,8 @@ const bookSchema = new mongoose.Schema({
     author: String,
     owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     up_for_trade: { type: Boolean, default: false },
-    imageURL: String
+    imageURL: String,
+    description: String
 });
 
 const Book = mongoose.model('Book', bookSchema);

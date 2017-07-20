@@ -6729,12 +6729,6 @@ footer {
   footer p, footer ul {
     margin-bottom: 0; }
 
-a, a:hover, a:visited, a:active {
-  color: #d83c30; }
-
-button {
-  background-color: #d83c30; }
-
 textarea {
   resize: vertical; }
 
@@ -6759,3 +6753,6 @@ textarea {
   #book-list li {
     float: left;
     margin: 2%; }
+
+.add-book i {
+  margin-top: 30%; }

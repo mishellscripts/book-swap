@@ -1,9 +1,14 @@
 extends ../layout
-
+block links
+  link(rel='stylesheet', href='/css/detail.css')
 block content
   .page-header
-      h1 #{book.title}
-      p.lead #{book.author}
-  hr
+    .pull-left
+      img(src=book.imageURL)
+    h2 #{book.title}
+    p.lead #{book.author}
   p This book is owned by 
     a(href='/profile/' + owner_id) #{owner_name}
+  p 
+    b Owner description: 
+    | #{book.description}

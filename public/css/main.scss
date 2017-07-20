@@ -30,14 +30,6 @@ footer {
   }
 }
 
-a, a:hover, a:visited, a:active {
-  color: #d83c30;
-}
-
-button {
-  background-color: #d83c30;
-}
-
 // Input Fields
 // -------------------------
 
@@ -85,4 +77,8 @@ textarea {
     float: left;
     margin: 2%;
   }
+}
+
+.add-book i {
+  margin-top: 30%;
 }

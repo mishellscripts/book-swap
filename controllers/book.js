@@ -13,6 +13,15 @@ exports.getNewBook = (req, res, next)=> {
   });
 }
 
+const search = title=> {
+  books.search(title, function(err, results) {
+    if (err) console.log(err);
+    else return results;
+  });
+}
+
+exports.searchBooks = search;
+
 /**
  * POST /new
  * Add a book
@@ -32,9 +41,7 @@ exports.postNewBook = (req, res, next)=> {
   const waterfall = require('async-waterfall');
 
   // Validate book here (by searching google books API)
-  books.search(req.body.title, function(err, results) {
-    if (err) console.log(err);
-    else { 
+  /*
       // Allow user to select from array
       waterfall([
         (callback)=> {
@@ -53,7 +60,9 @@ exports.postNewBook = (req, res, next)=> {
           });
       }]);
     }
-  })
+
+
+  })*/
 };
 
 /**
@@ -66,5 +75,31 @@ exports.getBookDetail = (req, res, next)=> {
       console.log(user);
       res.render('books/detail', {book: result, owner_name: user.profile.full_name || user.email, owner_id: result.owner});
     });      
+  });
+}
+
+/**
+ * GET /account/books
+ * View and manage books page
+ */
+exports.getUserBooks = (req, res, next)=> {
+  res.render('books/view', {
+    title: 'My book collection',
+    books: req.user.books,
+    description: 'View and manage your book collection'
+  });
+}
+
+/**
+ * GET /view
+ * Book dashboard page
+ */
+exports.getAllBooks = (req, res, next)=> {
+  Book.find({}, (err, result)=> {
+      res.render('books/view', {
+      title: 'Book dashboard',
+      books: result,
+      description: ''
+    });
   });
 }

@@ -3,20 +3,22 @@ extends ../layout
 block content
   .row
     .pull-left
-      h1 My books
-      p.lead View and manage your book collection
-    a(href='/new') 
-      i.fa.fa-plus-circle.fa-3x(aria-hidden='true')
+      h1 #{title}
+      p.lead #{description}
   hr
+  .col-md-2.text-center
+    a(href='/new' class='add-book') 
+      i.fa.fa-plus-circle.fa-5x(aria-hidden='true')
+    h4 Add a book
   if books.length
-    ul#book-list
+    #book-list
       each book in books
-        li 
-          p #{book.title}
+        .col-md-2
+          h4 #{book.title}
           p #{book.author}
           a(href='/book/' + book._id)
             img(src=book.imageURL)
           p 
             a(href='#', class='remove-book-link') Remove
   else
-    h1 No books found :<
+    p No books found :<
