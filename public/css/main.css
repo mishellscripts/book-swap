@@ -6756,7 +6756,10 @@ textarea {
   display: flex;
   flex-wrap: wrap; }
   #book-list .book {
-    cursor: pointer; }
+    cursor: pointer;
+    margin: 2.5%; }
+    #book-list .book a:hover {
+      text-decoration: none; }
   #book-list h4 {
     font-weight: bold; }
 

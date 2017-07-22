@@ -27,7 +27,6 @@
     "express-flash": "^0.0.2",
     "express-session": "^1.14.2",
     "express-validator": "^3.1.2",
-    "google-books-search": "^0.3.1",
     "lusca": "^1.4.1",
     "mongoose": "^4.6.6",
     "morgan": "^1.7.0",

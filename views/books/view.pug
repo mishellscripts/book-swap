@@ -14,10 +14,12 @@ block content
     #book-list
       each book in books
         .book.col-md-2
-          h4 #{book.title}
-          p #{book.author}
           a(href='/book/' + book._id)
+            h4 #{book.title}
+            p #{book.author}
             img(src=book.imageURL)
+            if userView
+              a(href='/remove/' + book._id, data-method='delete', data-confirm='Are you sure?') Remove
   else
     p No books found :<
     .col-md-4.col-md-offset-4.text-center

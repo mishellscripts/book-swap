@@ -1,14 +1,27 @@
 extends ../layout
-block links
-  link(rel='stylesheet', href='/css/detail.css')
+
 block content
-  .page-header
-    .pull-left
-      img(src=book.imageURL)
-    h2 #{book.title}
-    p.lead #{book.author}
-  p This book is owned by 
-    a(href='/profile/' + owner_id) #{owner_name}
-  p 
-    b Owner description: 
-    | #{book.description}
+  .page-header.row
+    .pull-left.col-md-2
+      img(style='width: 200px' src=book.imageURL)
+    .col-md-6.col-md-offset-1
+      h2(style='font-weight: bold') 
+        | #{book.title}
+      p.lead #{book.author}
+      p This book is owned by 
+        a(href='/profile/' + owner_id) #{owner_name}
+      p 
+        b Owner description: 
+        | #{book.description}
+    .col-md-2
+      if isOwners
+        ul
+          li Toggle trade status
+          li Remove
+      else
+        ul
+          li Availability
+          li Report
+  .row
+    h2 API information goes here
+  

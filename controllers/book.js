@@ -1,6 +1,5 @@
 const Book = require('../models/Book');
 const User = require('../models/User');
-const books = require('google-books-search');
 
 /**
  * GET /new
@@ -12,15 +11,6 @@ exports.getNewBook = (req, res, next)=> {
     books: req.user.books
   });
 }
-
-const search = title=> {
-  books.search(title, function(err, results) {
-    if (err) console.log(err);
-    else return results;
-  });
-}
-
-exports.searchBooks = search;
 
 /**
  * POST /new
@@ -58,8 +48,15 @@ exports.postNewBook = (req, res, next)=> {
 exports.getBookDetail = (req, res, next)=> {
   Book.findById(req.params.bookid, (err, result)=> {
     User.findById(result.owner, (err, user)=> {
-      console.log(user);
-      res.render('books/detail', {book: result, owner_name: user.profile.full_name || user.email, owner_id: result.owner});
+      if (err) console.log(err);
+      else {
+        res.render('books/detail', {
+          book: result, 
+          owner_name: user.profile.full_name || user.email, 
+          owner_id: result.owner,
+          isOwners: req.user && result.owner == req.user.id
+        });
+      }
     });      
   });
 }
@@ -72,7 +69,8 @@ exports.getUserBooks = (req, res, next)=> {
   res.render('books/view', {
     title: 'My book collection',
     books: req.user.books,
-    description: 'View and manage your book collection'
+    description: 'View and manage your book collection',
+    userView: true
   });
 }
 
@@ -82,10 +80,27 @@ exports.getUserBooks = (req, res, next)=> {
  */
 exports.getAllBooks = (req, res, next)=> {
   Book.find({}, (err, result)=> {
+    if (err) console.log(err);
+    else {
       res.render('books/view', {
-      title: 'Book dashboard',
-      books: result,
-      description: ''
-    });
+        title: 'Book dashboard',
+        books: result,
+        description: ''
+      });
+    }
   });
+}
+
+/**
+ * DELETE /remove/bookid
+ * Remove a book
+ */
+exports.removeBook = (req, res, next)=> {
+  console.log('happens');
+  if (err) console.log(err);
+  else {
+    Book.findByIdAndRemove(req.params.bookid, (err, result)=> {
+      res.redirect('/account/books');
+    });
+  }
 }
