@@ -38,7 +38,8 @@ exports.postNewBook = (req, res, next)=> {
     owner: req.user.id,
     title: req.body.title,
     author: req.body.author,
-    description: req.body.description
+    description: req.body.description,
+    imageURL: req.body.imageURL
   });
 
   book.save((err) => {

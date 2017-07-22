@@ -30,6 +30,13 @@ footer {
   }
 }
 
+// Title
+// -------------------------
+h1 {
+  font-size: 3em;
+  font-weight: normal;
+}
+
 // Input Fields
 // -------------------------
 
@@ -72,14 +79,20 @@ textarea {
 // Book list
 // -------------------------
 #book-list {
-  list-style: none;
-  li {
-    float: left;
-    margin: 2%;
+  display: flex;
+  flex-wrap: wrap;
+  .book {
     cursor: pointer;
+    margin: 2.5%;
+  }
+  h4 {
+    font-weight: bold;
   }
 }
 
-.add-book i {
-  margin-top: 30%;
+.add-book {
+  i {
+    margin-top: 30%;
+    color: #d83c30;
+  }
 }

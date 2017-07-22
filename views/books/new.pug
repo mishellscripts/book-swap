@@ -5,17 +5,17 @@ block content
       h1 Add book
       p.lead Add a book to your collection
   div(ng-app='bookApp')
-    form.form-horizontal(method='POST', ng-controller='BookController')
+    form.form-horizontal(method='POST', action='/new', ng-controller='BookController')
       input(type='hidden', name='_csrf', value=_csrf)
       .form-group
         label.col-sm-3.control-label(for='Title') Title
         .col-sm-5
           input.form-control(ng-model='title', type='title', name='title', id='title', autofocus, required)
         button.btn.btn-primary(type='button', ng-click='searchBook()') Search
+      h4(ng-if='books.length') Select from one of the following:
       #book-list(ng-if='books.length')
-        h4.clearfix Select from one of the following:
-          li(ng-repeat='book in books' ng-click='updateBook(book)')
-            img(ng-src='{{book.volumeInfo.imageLinks.thumbnail}}')
+        .col-md-2.book(ng-repeat='book in books' ng-click='updateBook(book)')
+          img(ng-src='{{book.volumeInfo.imageLinks.thumbnail}}')
       .form-group(ng-if='books.length')
         label.col-sm-3.control-label(for='Author') Author
         .col-sm-7
@@ -24,6 +24,7 @@ block content
         label.col-sm-3.control-label(for='Description') Description
         .col-sm-7
           textarea.form-control(type='description', name='description', id='description', placeholder='Description', required)
+          input.form-control(type='hidden', name='imageURL', id='imageURL', value='{{bk.volumeInfo.imageLinks.thumbnail}}')
       .form-group(ng-if='books.length')
         .col-sm-offset-3.col-sm-7
           button.btn.btn-success(type='submit')
