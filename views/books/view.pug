@@ -6,11 +6,11 @@ block content
       h1 #{title}
       p.lead #{description}
   hr
-  .col-md-2.text-center
-    a(href='/new' class='add-book') 
-      i.fa.fa-plus-circle.fa-5x(aria-hidden='true')
-    h4 Add a book
   if books.length
+    .col-md-2.text-center
+      a(href='/new' class='add-book') 
+        i.fa.fa-plus-circle.fa-5x(aria-hidden='true')
+      h4 Add a book
     #book-list
       each book in books
         .col-md-2
@@ -18,7 +18,9 @@ block content
           p #{book.author}
           a(href='/book/' + book._id)
             img(src=book.imageURL)
-          p 
-            a(href='#', class='remove-book-link') Remove
   else
     p No books found :<
+    .col-md-4.col-md-offset-4.text-center
+      a(href='/new' class='add-book') 
+        i.fa.fa-plus-circle.fa-5x(aria-hidden='true')
+      h3 Add a book

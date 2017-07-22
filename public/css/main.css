@@ -6752,7 +6752,8 @@ textarea {
   list-style: none; }
   #book-list li {
     float: left;
-    margin: 2%; }
+    margin: 2%;
+    cursor: pointer; }
 
 .add-book i {
   margin-top: 30%; }

@@ -9,21 +9,23 @@ block content
       input(type='hidden', name='_csrf', value=_csrf)
       .form-group
         label.col-sm-3.control-label(for='Title') Title
+        .col-sm-5
+          input.form-control(ng-model='title', type='title', name='title', id='title', autofocus, required)
+        button.btn.btn-primary(type='button', ng-click='searchBook()') Search
+      #book-list(ng-if='books.length')
+        h4.clearfix Select from one of the following:
+          li(ng-repeat='book in books' ng-click='updateBook(book)')
+            img(ng-src='{{book.volumeInfo.imageLinks.thumbnail}}')
+      .form-group(ng-if='books.length')
+        label.col-sm-3.control-label(for='Author') Author
         .col-sm-7
-          input.form-control(ng-model='title', type='title', name='title', id='title', placeholder='Title', autofocus, required)
-      button.btn.btn-primary(type='button', ng-click='searchBook()') Search
-      div(ng-show='showBooks')
-        .col-md-2(ng-repeat='book in books track by $id($index)')
-        .form-group
-          label.col-sm-3.control-label(for='Author') Author
-          .col-sm-7
-            input.form-control(type='author', name='author', id='author', placeholder='author', required)
-        .form-group
-          label.col-sm-3.control-label(for='Description') Description
-          .col-sm-7
-            textarea.form-control(type='description', name='description', id='description', placeholder='description', required)    
-        .form-group
-          .col-sm-offset-3.col-sm-7
-            button.btn.btn-success(type='submit')
-              i.fa.fa-user-plus
-              | Add
+          input.form-control(type='author', name='author', id='author', value='{{bk.volumeInfo.authors[0]}}', required)
+      .form-group(ng-if='books.length')
+        label.col-sm-3.control-label(for='Description') Description
+        .col-sm-7
+          textarea.form-control(type='description', name='description', id='description', placeholder='Description', required)
+      .form-group(ng-if='books.length')
+        .col-sm-offset-3.col-sm-7
+          button.btn.btn-success(type='submit')
+            i.fa.fa-user-plus
+            | Add

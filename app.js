@@ -52,30 +52,6 @@ mongoose.connection.on('error', (err) => {
 });
 
 /**
- * Open socket connection.
- */
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
-
-io.on('connection', socket=>{
-  console.log('A user connected');
-
-  let books = [];
-  socket.on('getTitle', title=> {
-    books = bookController.searchBooks(title);
-    console.log(books);
-  });
-
-  socket.emit('searchBooks', books);
-
-  socket.on('disconnect', ()=> {
-    console.log('A user disconnected');
-  });
-});
-
-server.listen(process.env.PORT || 3000);
-
-/**
  * Express configuration.
  */
 app.set('port', process.env.PORT || 3000);
@@ -154,7 +130,7 @@ app.get('/new', passportConfig.isAuthenticated, bookController.getNewBook);
 app.post('/new', passportConfig.isAuthenticated, bookController.postNewBook);
 app.get('/book/:bookid', bookController.getBookDetail);
 app.get('/profile/:userid', userController.getUserProfile);
-app.get('/view', passportConfig.isAuthenticated, bookController.getAllBooks);
+app.get('/view', bookController.getAllBooks);
 
 /**
  * OAuth authentication routes. (Sign in)
@@ -175,10 +151,10 @@ app.use(errorHandler());
 
 /**
  * Start Express server.
- *
+ */
 app.listen(app.get('port'), () => {
   console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env')); 
   console.log('  Press CTRL-C to stop\n');
-});*/
+});
 
 module.exports = app;

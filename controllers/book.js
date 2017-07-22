@@ -35,34 +35,19 @@ exports.postNewBook = (req, res, next)=> {
   }
 
   const book = new Book({
-    owner: req.user.id
+    owner: req.user.id,
+    title: req.body.title,
+    author: req.body.author,
+    description: req.body.description
   });
 
-  const waterfall = require('async-waterfall');
-
-  // Validate book here (by searching google books API)
-  /*
-      // Allow user to select from array
-      waterfall([
-        (callback)=> {
-          book.imageURL = results[0].thumbnail;
-          book.title = results[0].title;
-          book.author = results[0].author || results[0].authors.join(", ");
-          callback(null);
-        },
-        ()=> {
-          book.save((err) => {
-            if (err) { return next(err); }
-            User.findByIdAndUpdate(req.user.id, {$push: {books: book}}, err=> {
-              if (err) { return next(err); }
-              res.redirect('/account/books');
-            });
-          });
-      }]);
-    }
-
-
-  })*/
+  book.save((err) => {
+    if (err) { return next(err); }
+    User.findByIdAndUpdate(req.user.id, {$push: {books: book}}, err=> {
+      if (err) { return next(err); }
+      res.redirect('/account/books');
+    });
+  });
 };
 
 /**

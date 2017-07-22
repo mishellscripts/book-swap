@@ -1,22 +1,24 @@
 (()=> {
   let app = angular.module('bookApp', []);
 
-  app.controller('BookController', ['$scope',
-      $scope=> {
-        $scope.showBooks = false;
+  app.controller('BookController', ['$scope', '$http',
+      ($scope, $http)=> {
         $scope.title = '';
-        $scope.searchBook = ()=> {
-          console.log('hello');
-          socket.emit('getTitle', $scope.title);
+        $scope.books = [];
+        $scope.bk = {};
 
-          socket.on('searchBooks', books=> {
-            console.log(books);
-            $scope.books = books;
-            showBooks = true;
+        $scope.searchBook = ()=> {
+          const apiURL = 'https://www.googleapis.com/books/v1/volumes?q=' + $scope.title
+          $http.get(apiURL).then(data=> {
+            $scope.books = data.data.items;
+            console.log(data.data.items[0]);
           });
         };
+
+        $scope.updateBook = book=> {
+          $scope.bk = book;
+          $scope.title = book.volumeInfo.title;
+        }
       }
   ]);
 })();
-
-let socket = io();
