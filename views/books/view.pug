@@ -7,19 +7,19 @@ block content
       p.lead #{description}
   hr
   if books.length
-    .col-md-2.text-center
-      a(href='/new' class='add-book') 
-        i.fa.fa-plus-circle.fa-5x(aria-hidden='true')
-      h4 Add a book
     #book-list
+      .col-md-2.text-center
+        a(href='/new' class='add-book') 
+          i.fa.fa-plus-circle.fa-5x(aria-hidden='true')
+        h4 Add a book
       each book in books
         .book.col-md-2
           a(href='/book/' + book._id)
             h4 #{book.title}
             p #{book.author}
             img(src=book.imageURL)
-            if userView
-              a(href='/remove/' + book._id, data-method='delete', data-confirm='Are you sure?') Remove
+          if userView
+            a.remove-link(href='/remove/' + book._id) Remove
   else
     p No books found :<
     .col-md-4.col-md-offset-4.text-center

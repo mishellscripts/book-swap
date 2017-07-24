@@ -6757,7 +6757,7 @@ textarea {
   flex-wrap: wrap; }
   #book-list .book {
     cursor: pointer;
-    margin: 2.5%; }
+    margin: 2.5% 0%; }
     #book-list .book a:hover {
       text-decoration: none; }
   #book-list h4 {

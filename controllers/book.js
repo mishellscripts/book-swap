@@ -92,15 +92,17 @@ exports.getAllBooks = (req, res, next)=> {
 }
 
 /**
- * DELETE /remove/bookid
+ * GET /remove/bookid
  * Remove a book
  */
 exports.removeBook = (req, res, next)=> {
   console.log('happens');
-  if (err) console.log(err);
-  else {
-    Book.findByIdAndRemove(req.params.bookid, (err, result)=> {
-      res.redirect('/account/books');
-    });
-  }
+  Book.findByIdAndRemove(req.params.bookid, (err, result)=> {
+    if (err) console.log(err); 
+    else {
+      User.findByIdAndUpdate(result.owner, {$pull: {books: result}}, err=>{
+        res.redirect('/account/books');
+      });
+    }
+  });
 }

@@ -17,7 +17,8 @@ block content
       if isOwners
         ul
           li Toggle trade status
-          li Remove
+          li 
+            a(href='/remove/' + book._id) Remove
       else
         ul
           li Availability

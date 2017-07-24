@@ -131,7 +131,7 @@ app.post('/new', passportConfig.isAuthenticated, bookController.postNewBook);
 app.get('/book/:bookid', bookController.getBookDetail);
 app.get('/profile/:userid', userController.getUserProfile);
 app.get('/view', bookController.getAllBooks);
-app.delete('/remove/:bookid', passportConfig.isAuthenticated, bookController.removeBook);
+app.get('/remove/:bookid', passportConfig.isAuthenticated, bookController.removeBook);
 
 /**
  * OAuth authentication routes. (Sign in)

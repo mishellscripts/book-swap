@@ -7,6 +7,7 @@ block content
   div(ng-app='bookApp')
     form.form-horizontal(method='POST', action='/new', ng-controller='BookController')
       input(type='hidden', name='_csrf', value=_csrf)
+      input(type='text', style='display: none')
       .form-group
         label.col-sm-3.control-label(for='Title') Title
         .col-sm-5
