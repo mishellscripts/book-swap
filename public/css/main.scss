@@ -96,6 +96,23 @@ textarea {
 .add-book {
   i {
     margin-top: 30%;
-    color: #d83c30;
+  }
+}
+
+// Book detail menu
+// ------------------------
+#detail-menu {
+  margin-top: 2%;
+  p {
+    font-size: 1.25em;
+  }
+  ul {
+    list-style: none;
+  }
+  li {
+    padding: 5px 0px;
+  }
+  i {
+    padding-left: 10px;
   }
 }

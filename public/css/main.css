@@ -6764,5 +6764,15 @@ textarea {
     font-weight: bold; }
 
 .add-book i {
-  margin-top: 30%;
-  color: #d83c30; }
+  margin-top: 30%; }
+
+#detail-menu {
+  margin-top: 2%; }
+  #detail-menu p {
+    font-size: 1.25em; }
+  #detail-menu ul {
+    list-style: none; }
+  #detail-menu li {
+    padding: 5px 0px; }
+  #detail-menu i {
+    padding-left: 10px; }

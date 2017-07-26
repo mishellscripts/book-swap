@@ -14,8 +14,6 @@
           a(href='/') Home
         li(class=(title == 'View') ? 'active' : undefined)
           a(href='/view') View
-        li(class=(title == 'Add') ? 'active' : undefined)
-          a(href='/new') Add
       ul.nav.navbar-nav.navbar-right
         if !user
           li(class=(title == 'Login') ? 'active' : undefined)
@@ -34,6 +32,9 @@
             ul.dropdown-menu
               li
                 a(href='/account') Account settings
+              li.divider
+              li
+                a(href='/new') Add a book
               li.divider
               li
                 a(href='/account/books') My book collection

@@ -126,12 +126,14 @@ app.post('/account/profile', passportConfig.isAuthenticated, userController.post
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 app.get('/account/books', passportConfig.isAuthenticated, bookController.getUserBooks);
+app.get('/account/trades', passportConfig.isAuthenticated, bookController.getUserTrades);
 app.get('/new', passportConfig.isAuthenticated, bookController.getNewBook);
 app.post('/new', passportConfig.isAuthenticated, bookController.postNewBook);
 app.get('/book/:bookid', bookController.getBookDetail);
 app.get('/profile/:userid', userController.getUserProfile);
 app.get('/view', bookController.getAllBooks);
 app.get('/remove/:bookid', passportConfig.isAuthenticated, bookController.removeBook);
+app.get('/toggle/:bookid', passportConfig.isAuthenticated, bookController.toggleBookTradeStatus);
 
 /**
  * OAuth authentication routes. (Sign in)

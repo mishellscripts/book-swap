@@ -28,8 +28,11 @@ exports.postNewBook = (req, res, next)=> {
     owner: req.user.id,
     title: req.body.title,
     author: req.body.author,
-    description: req.body.description,
-    imageURL: req.body.imageURL
+    up_for_trade: req.body.tradestatus,
+    imageURL: req.body.imageURL,
+    owner_description: req.body.owner_description,
+    search_description: req.body.description,
+    rating: req.body.rating
   });
 
   book.save((err) => {
@@ -50,6 +53,7 @@ exports.getBookDetail = (req, res, next)=> {
     User.findById(result.owner, (err, user)=> {
       if (err) console.log(err);
       else {
+        console.log(result);
         res.render('books/detail', {
           book: result, 
           owner_name: user.profile.full_name || user.email, 
@@ -69,8 +73,7 @@ exports.getUserBooks = (req, res, next)=> {
   res.render('books/view', {
     title: 'My book collection',
     books: req.user.books,
-    description: 'View and manage your book collection',
-    userView: true
+    description: 'View and manage your book collection'
   });
 }
 
@@ -96,13 +99,43 @@ exports.getAllBooks = (req, res, next)=> {
  * Remove a book
  */
 exports.removeBook = (req, res, next)=> {
-  console.log('happens');
-  Book.findByIdAndRemove(req.params.bookid, (err, result)=> {
-    if (err) console.log(err); 
-    else {
-      User.findByIdAndUpdate(result.owner, {$pull: {books: result}}, err=>{
+  Book.findOne({_id: req.params.bookid}, (err, book)=> {
+    if (err) console.log(err);
+    else if (book.owner == req.user.id) {  
+      book.remove();
+      User.findByIdAndUpdate(book.owner, {$pull: {books: book}}, err=>{
         res.redirect('/account/books');
       });
+    } else {
+      res.json('Error 403. You do not have the permissions to do this.');
     }
   });
+};
+
+/**
+ * GET /toggle/bookid
+ * Toggle book trade status
+ */
+exports.toggleBookTradeStatus = (req, res, next)=> {
+  Book.findOne({_id: req.params.bookid}, (err, book)=> {
+    if (book.owner == req.user.id) {
+      Book.findByIdAndUpdate(req.params.bookid, {$bit: {up_for_trade: {xor: 1}}}, err=>{
+        if (err) console.log(err);
+        else {
+          res.redirect('/book/' + req.params.bookid);
+        }
+      });
+    }
+    else {
+      res.json('Error 403. You do not have the permissions to do this.');
+    }
+  });
+};
+
+/**
+ * GET /account/trades
+ * Get user trades
+ */
+exports.getUserTrades = (req, res, next)=> {
+  res.render('books/trades');
 }

@@ -5,24 +5,49 @@ block content
     .pull-left.col-md-2
       img(style='width: 200px' src=book.imageURL)
     .col-md-6.col-md-offset-1
-      h2(style='font-weight: bold') 
+      h2(style='font-weight: bold')
         | #{book.title}
       p.lead #{book.author}
+      if book.rating
+        - var baseRating = Math.floor(book.rating)
+        - for (var i = 0; i < baseRating; ++i) {
+          i.fa.fa-star.fa-2x(aria-hidden='true')
+        - }
+        - if (Math.round(book.rating) != baseRating) {
+          i.fa.fa-star-half-o.fa-2x(aria-hidden='true')
+        - }
+      p  
       p This book is owned by 
-        a(href='/profile/' + owner_id) #{owner_name}
-      p 
-        b Owner description: 
-        | #{book.description}
-    .col-md-2
+        a(style='color: #d83c30', href='/profile/' + owner_id) #{owner_name}
+    .col-md-2#detail-menu
       if isOwners
         ul
-          li Toggle trade status
+          p 
+            b Manage
+          li
+            a(href='/toggle/' + book._id)
+              if book.up_for_trade
+                | Trade on
+                i.fa.fa-toggle-on(aria-hidden='true')
+              else
+                | Trade off
+                i.fa.fa-toggle-off(aria-hidden='true')
           li 
             a(href='/remove/' + book._id) Remove
+              i.fa.fa-trash-o(aria-hidden='true')
       else
         ul
-          li Availability
-          li Report
-  .row
-    h2 API information goes here
-  
+          p
+            b Options
+          li
+            if book.up_for_trade
+              i.fa.fa-exchange(aria-hidden='true', style='color: green')
+              | Request trade
+            else
+              i.fa.fa-ban(aria-hidden='true', style='color: red')
+              | Trade disabled
+  .row(style='overflow-y: auto')
+    h3(style='font-weight: bold') Summary
+    p #{book.search_description}
+    h3(style='font-weight: bold') Owner notes
+    p #{book.owner_description}  

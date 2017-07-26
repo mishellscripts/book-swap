@@ -21,11 +21,22 @@ block content
         label.col-sm-3.control-label(for='Author') Author
         .col-sm-7
           input.form-control(type='author', name='author', id='author', value='{{bk.volumeInfo.authors[0]}}', required)
-      .form-group(ng-if='books.length')
+      .form-group(ng-if='books.length')  
         label.col-sm-3.control-label(for='Description') Description
         .col-sm-7
-          textarea.form-control(type='description', name='description', id='description', placeholder='Description', required)
-          input.form-control(type='hidden', name='imageURL', id='imageURL', value='{{bk.volumeInfo.imageLinks.thumbnail}}')
+          textarea.form-control(type='owner_description', name='owner_description', id='owner_description', placeholder='Description', required)
+      .form-group(ng-if='books.length')
+        label.col-sm-3.control-label(for='Trade') Do you want to put this book up for trade?
+        .col-sm-6
+          label.radio.col-sm-3
+            input(type='radio', name='tradestatus', value='1', data-toggle='radio')
+            span Yes
+          label.radio.col-sm-3
+            input(type='radio', name='tradestatus', value='0', data-toggle='radio')
+            span No
+        input.form-control(type='hidden', name='imageURL', id='imageURL', value='{{bk.volumeInfo.imageLinks.thumbnail}}')
+        input.form-control(type='hidden', name='description', id='description', value='{{bk.volumeInfo.description}}')
+        input.form-control(type='hidden', name='rating', id='rating', value='{{bk.volumeInfo.averageRating}}')
       .form-group(ng-if='books.length')
         .col-sm-offset-3.col-sm-7
           button.btn.btn-success(type='submit')
