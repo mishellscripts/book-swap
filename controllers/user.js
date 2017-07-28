@@ -368,6 +368,7 @@ exports.postForgot = (req, res, next) => {
  */
 exports.getUserProfile = (req, res, next)=> {
   User.findById(req.params.userid, (err, result)=> {
+    console.log(result);
     res.render('users/profile', {
       user: result
     });

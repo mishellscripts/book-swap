@@ -28,7 +28,6 @@ exports.postNewBook = (req, res, next)=> {
     owner: req.user.id,
     title: req.body.title,
     author: req.body.author,
-    up_for_trade: req.body.tradestatus,
     imageURL: req.body.imageURL,
     owner_description: req.body.owner_description,
     search_description: req.body.description,
@@ -117,25 +116,24 @@ exports.removeBook = (req, res, next)=> {
  * Toggle book trade status
  */
 exports.toggleBookTradeStatus = (req, res, next)=> {
+  // Check if profile filled out
+  const userProfile = req.user.profile;
+  const profileComplete = userProfile.full_name && userProfile.location.city && userProfile.location.state;
+  
   Book.findOne({_id: req.params.bookid}, (err, book)=> {
-    if (book.owner == req.user.id) {
-      Book.findByIdAndUpdate(req.params.bookid, {$bit: {up_for_trade: {xor: 1}}}, err=>{
+    if (book.owner != req.user.id) {
+      req.flash('errors', { msg: 'You do not have the permissions to do this.' });
+      res.redirect('/book/' + req.params.bookid);
+    } else if (!profileComplete) {
+      req.flash('errors', { msg: 'Please complete your profile to enable trading.' });
+      res.redirect('/account');
+    } else {
+        Book.findByIdAndUpdate(req.params.bookid, {$bit: {up_for_trade: {xor: 1}}}, err=>{
         if (err) console.log(err);
         else {
           res.redirect('/book/' + req.params.bookid);
         }
       });
-    }
-    else {
-      res.json('Error 403. You do not have the permissions to do this.');
-    }
+    }  
   });
 };
-
-/**
- * GET /account/trades
- * Get user trades
- */
-exports.getUserTrades = (req, res, next)=> {
-  res.render('books/trades');
-}

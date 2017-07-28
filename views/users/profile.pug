@@ -1,7 +1,17 @@
 extends ../layout
 
 block content
-  .row
-    .pull-left
+  .page-header.row
+    .pull-left.col-md-2
+      img(style='width: 200px' src=user.profile.picture)
+    .col-md-6.col-md-offset-1
       h1 #{user.profile.full_name}
       p.lead #{user.profile.location.city}, #{user.profile.location.state}
+  h3(style='font-weight: bold') Books owned
+  #book-list
+    each book in user.books
+      .book.col-md-2
+        a(href='/book/' + book._id)
+          h4 #{book.title}
+          p #{book.author}
+          img(src=book.imageURL)

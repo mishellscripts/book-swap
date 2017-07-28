@@ -29,6 +29,7 @@ dotenv.load({ path: '.env' });
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const bookController = require('./controllers/book');
+const tradeController = require('./controllers/trade');
 
 /**
  * API keys and Passport configuration.
@@ -126,7 +127,7 @@ app.post('/account/profile', passportConfig.isAuthenticated, userController.post
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 app.get('/account/books', passportConfig.isAuthenticated, bookController.getUserBooks);
-app.get('/account/trades', passportConfig.isAuthenticated, bookController.getUserTrades);
+app.get('/account/trades', passportConfig.isAuthenticated, tradeController.getUserTrades);
 app.get('/new', passportConfig.isAuthenticated, bookController.getNewBook);
 app.post('/new', passportConfig.isAuthenticated, bookController.postNewBook);
 app.get('/book/:bookid', bookController.getBookDetail);
@@ -134,6 +135,9 @@ app.get('/profile/:userid', userController.getUserProfile);
 app.get('/view', bookController.getAllBooks);
 app.get('/remove/:bookid', passportConfig.isAuthenticated, bookController.removeBook);
 app.get('/toggle/:bookid', passportConfig.isAuthenticated, bookController.toggleBookTradeStatus);
+app.get('/trade/for/:bookid', passportConfig.isAuthenticated, tradeController.getSendTrade);
+app.post('/trade/for/:bookid', passportConfig.isAuthenticated, tradeController.postSendTrade);
+app.get('/trade/:tradeid', passportConfig.isAuthenticated, tradeController.getTradeDetail);
 
 /**
  * OAuth authentication routes. (Sign in)

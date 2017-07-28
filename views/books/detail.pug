@@ -28,10 +28,10 @@ block content
             a(href='/toggle/' + book._id)
               if book.up_for_trade
                 | Trade on
-                i.fa.fa-toggle-on(aria-hidden='true')
+                i.fa.fa-toggle-on(aria-hidden='true', style='color: green')
               else
                 | Trade off
-                i.fa.fa-toggle-off(aria-hidden='true')
+                i.fa.fa-toggle-off(aria-hidden='true', style='color: red')
           li 
             a(href='/remove/' + book._id) Remove
               i.fa.fa-trash-o(aria-hidden='true')
@@ -41,13 +41,16 @@ block content
             b Options
           li
             if book.up_for_trade
-              i.fa.fa-exchange(aria-hidden='true', style='color: green')
-              | Request trade
+              a(href='/trade/for/' + book._id) 
+                i.fa.fa-exchange(aria-hidden='true', style='color: green')
+                | Request trade
             else
               i.fa.fa-ban(aria-hidden='true', style='color: red')
               | Trade disabled
   .row(style='overflow-y: auto')
-    h3(style='font-weight: bold') Summary
-    p #{book.search_description}
-    h3(style='font-weight: bold') Owner notes
-    p #{book.owner_description}  
+    if book.search_description
+      h3(style='font-weight: bold') Summary
+      p #{book.search_description}
+    if book.owner_description
+      h3(style='font-weight: bold') Owner notes
+      p #{book.owner_description}  

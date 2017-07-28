@@ -6,7 +6,7 @@ const bookSchema = new mongoose.Schema({
     owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     up_for_trade: { type: Number, default: 0 },
     imageURL: String,
-    owner_description: String,
+    owner_description: { type: String, required: true },
     search_description: String,
     rating: Number
 });
