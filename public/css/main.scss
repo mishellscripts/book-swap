@@ -88,6 +88,9 @@ textarea {
       text-decoration: none;
     }
   }
+  .book-selected {
+    border: 1px solid rgba(0,0,0,0.2);
+  }
   h4 {
     font-weight: bold;
   }
@@ -115,4 +118,18 @@ textarea {
   i {
     padding-left: 10px;
   }
+}
+
+// Trade menu
+// -----------------------
+#trade-menu {
+  border: 1px solid rgba(0,0,0,0.2);
+  margin-top: 5%;
+  i {
+    padding: 10px;
+  }
+}
+
+#trade-container {
+  margin-top: 10%;
 }

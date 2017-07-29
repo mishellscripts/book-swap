@@ -6760,6 +6760,8 @@ textarea {
     margin: 2.5% 0%; }
     #book-list .book a:hover {
       text-decoration: none; }
+  #book-list .book-selected {
+    border: 1px solid rgba(0, 0, 0, 0.2); }
   #book-list h4 {
     font-weight: bold; }
 
@@ -6776,3 +6778,12 @@ textarea {
     padding: 5px 0px; }
   #detail-menu i {
     padding-left: 10px; }
+
+#trade-menu {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin-top: 5%; }
+  #trade-menu i {
+    padding: 10px; }
+
+#trade-container {
+  margin-top: 10%; }

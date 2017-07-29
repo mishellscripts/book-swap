@@ -14,7 +14,7 @@ block content
         button.btn.btn-primary(type='button', ng-click='searchBook()') Search
       h4(ng-if='books.length') Select from one of the following:
       #book-list(ng-if='books.length')
-        .col-md-2.book(ng-repeat='book in books' ng-click='updateBook(book)')
+        .col-md-2.book(ng-repeat='book in books', ng-class="{'book-selected': $index == selectedIndex}", ng-click='updateBook(book, $index)')
           img(ng-src='{{book.volumeInfo.imageLinks.thumbnail}}')
       .form-group(ng-if='books.length')
         label.col-sm-3.control-label(for='Author') Author
@@ -34,4 +34,4 @@ block content
             | Add
 block scripts
   script.
-    const sender=null
+    const senderBooks=null

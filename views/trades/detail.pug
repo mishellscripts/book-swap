@@ -1,11 +1,46 @@
 extends ../layout
 
 block content
-  .page-header.row
-    .col-md-2
-      img(src='')
-    .col-md-6.col-md-offset-1
-      h1 #{trade.book}
-      p.lead #{trade.offer}
-    .col-md-2
-    img(src='')
+  .row#trade-container
+    if isSender
+      .col-md-1
+        h2 Your
+        h2(style='font-weight: bold')
+          | #{trade.offer.title}
+        p.lead #{trade.offer.author}
+      .col-md-2
+        img(src=trade.offer.imageURL)
+      .col-md-6
+        h2 In exchange for
+        #trade-menu.text-center
+          h2 Trade options
+          i.fa.fa-check-circle-o.fa-4x(aria-hidden='true', style='color: green')
+          i.fa.fa-times-circle-o.fa-4x(aria-hidden='true', style='color: red')
+      .col-md-2
+        img(src=trade.book.imageURL)
+      .col-md-1
+        h2 #{trade.sender.profile.full_name}'s
+        h2(style='font-weight: bold')
+          | #{trade.book.title}
+        p.lead #{trade.book.author}
+    else
+      .col-md-1
+        h2 Your
+        h2(style='font-weight: bold')
+          | #{trade.book.title}
+        p.lead #{trade.book.author}
+      .col-md-2 
+        img(src=trade.book.imageURL)
+      .col-md-6
+        h2 In exchange for
+        #trade-menu.text-center
+          h2 Trade options
+          i.fa.fa-check-circle-o.fa-4x(aria-hidden='true', style='color: green')
+          i.fa.fa-times-circle-o.fa-4x(aria-hidden='true', style='color: red')
+      .col-md-2
+        img(src=trade.offer.imageURL)
+      .col-md-1
+        h2 #{trade.sender.profile.full_name}'s
+        h2(style='font-weight: bold')
+          | #{trade.offer.title}
+        p.lead #{trade.offer.author}

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bookSchema = new mongoose.Schema({
     title: String,
     author: String,
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    owner: Object,
     up_for_trade: { type: Number, default: 0 },
     imageURL: String,
     owner_description: { type: String, required: true },

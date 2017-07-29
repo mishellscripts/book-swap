@@ -4,10 +4,11 @@
   app.controller('BookController', ['$scope', '$http',
       ($scope, $http)=> {
         $scope.title = '';
-        $scope.books = sender.books || [];
+        $scope.books = senderBooks || [];
         $scope.bk = {};
         $scope.bookId = '';
         $scope.bookImageUrl = '';
+        $scope.selectedIndex = 0;
 
         $scope.searchBook = ()=> {
           const apiURL = 'https://www.googleapis.com/books/v1/volumes?q=' + $scope.title
@@ -16,15 +17,17 @@
           });
         };
 
-        $scope.updateBookId = book=> {
+        $scope.updateBookId = (book, $index)=> {
           console.log($scope.books);
           $scope.bookId = book._id;
           $scope.bookImageUrl = book.imageURL;
+          $scope.selectedIndex = $index;
         }
 
-        $scope.updateBook = book=> {
+        $scope.updateBook = (book, $index)=> {
           $scope.bk = book;
           $scope.title = book.volumeInfo.title;
+          $scope.selectedIndex = $index;
         }
       }
   ]);

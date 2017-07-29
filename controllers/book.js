@@ -25,7 +25,7 @@ exports.postNewBook = (req, res, next)=> {
   }
 
   const book = new Book({
-    owner: req.user.id,
+    owner: req.user,
     title: req.body.title,
     author: req.body.author,
     imageURL: req.body.imageURL,
