@@ -11,7 +11,7 @@ block content
         label.col-sm-3.control-label(for='Title') Title
         .col-sm-5
           input.form-control(ng-model='title', type='title', name='title', id='title', autofocus, required)
-        button.btn.btn-primary(type='button', ng-click='searchBook()') Search
+        button.btn.btn-primary.search-button(type='button', ng-click='searchBook()') Search
       h4(ng-if='books.length') Select from one of the following:
       #book-list(ng-if='books.length')
         .col-md-2.book(ng-repeat='book in books', ng-class="{'book-selected': $index == selectedIndex}", ng-click='updateBook(book, $index)')

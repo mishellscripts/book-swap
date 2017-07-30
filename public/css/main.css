@@ -6729,6 +6729,18 @@ footer {
   footer p, footer ul {
     margin-bottom: 0; }
 
+.green {
+  color: green; }
+
+.red {
+  color: red; }
+
+.gray {
+  color: lightgray; }
+
+.clickable {
+  cursor: pointer; }
+
 h1 {
   font-size: 3em;
   font-weight: normal; }
@@ -6781,9 +6793,22 @@ textarea {
 
 #trade-menu {
   border: 1px solid rgba(0, 0, 0, 0.2);
-  margin-top: 5%; }
+  margin-bottom: 20px; }
   #trade-menu i {
     padding: 10px; }
 
 #trade-container {
-  margin-top: 10%; }
+  margin-top: 15%; }
+
+.trade-list .trade {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 20px 0px; }
+  .trade-list .trade li {
+    list-style: none;
+    margin: 2% 5%; }
+  .trade-list .trade > :nth-child(1) {
+    float: left; }
+  .trade-list .trade > :nth-child(2) {
+    float: right; }
+  .trade-list .trade img {
+    width: 50px; }

@@ -8,7 +8,7 @@ const tradeSchema = new mongoose.Schema({
     sender_status: { type: Number, default: 0 },
     receiver_status: { type: Number, default: 0 },
     message: { type: String, required: true }
-});
+}, {timestamps: true});
 
 const Trade = mongoose.model('Trade', tradeSchema);
 

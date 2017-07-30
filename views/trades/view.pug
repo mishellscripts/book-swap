@@ -1,0 +1,55 @@
+extends ../layout
+
+block content
+  .page-header.row
+    .pull-left
+      h1 Your trades
+      p.lead View and manage your trades with other users
+  .row
+    .col-md-6.trade-list
+      h4
+        b Trades sent to you (#{tradesReceived.length})
+      if tradesReceived.length
+        each tr in tradesReceived
+          a(href='/trade/' + tr._id)
+            .trade.row
+              li
+                p
+                  b #{tr.offer.title}
+                p #{tr.offer.author}
+                img(src=tr.offer.imageURL)
+              li
+                p
+                  b #{tr.book.title}
+                p #{tr.book.author}
+                img(src=tr.book.imageURL)
+      else
+        p Currently, you do not have any incoming trades
+    .col-md-6.trade-list
+      h4
+        b Trades you've sent to others (#{tradesSent.length})
+      if tradesSent.length
+        each ts in tradesSent
+          a(href='/trade/' + ts._id)
+            .trade.row
+              li
+                p(style='font-weight: ')
+                  | #{ts.book.title}
+                p #{ts.book.author}
+                img(src=ts.book.imageURL)
+              li
+                p
+                  b #{ts.offer.title}
+                p #{ts.offer.author}
+                img(src=ts.offer.imageURL)
+      else
+        p Currently, you do not have any outgoing trades
+  hr
+  .row
+    .col-md-6.trade-list
+      h4
+        b Trades completed (#{tradesCompleted.length})
+      if tradesCompleted.length
+        each tc in tradesCompleted
+          a(href='/trade/' + tc._id)
+            | #{tc.updatedAt}

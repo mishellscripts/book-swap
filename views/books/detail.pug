@@ -5,8 +5,8 @@ block content
     .pull-left.col-md-2
       img(style='width: 200px' src=book.imageURL)
     .col-md-6.col-md-offset-1
-      h2(style='font-weight: bold')
-        | #{book.title}
+      h2
+        b #{book.title}
       p.lead #{book.author}
       if book.rating
         - var baseRating = Math.floor(book.rating)
@@ -28,10 +28,10 @@ block content
             a(href='/toggle/' + book._id)
               if book.up_for_trade
                 | Trade on
-                i.fa.fa-toggle-on(aria-hidden='true', style='color: green')
+                i.fa.fa-toggle-on.green(aria-hidden='true')
               else
                 | Trade off
-                i.fa.fa-toggle-off(aria-hidden='true', style='color: red')
+                i.fa.fa-toggle-off.red(aria-hidden='true')
           li 
             a(href='/remove/' + book._id) Remove
               i.fa.fa-trash-o(aria-hidden='true')
@@ -42,15 +42,17 @@ block content
           li
             if book.up_for_trade
               a(href='/trade/for/' + book._id) 
-                i.fa.fa-exchange(aria-hidden='true', style='color: green')
+                i.fa.fa-exchange.green(aria-hidden='true')
                 | Request trade
             else
-              i.fa.fa-ban(aria-hidden='true', style='color: red')
+              i.fa.fa-ban.red(aria-hidden='true')
               | Trade disabled
-  .row(style='overflow-y: auto')
+  .row
     if book.search_description
-      h3(style='font-weight: bold') Summary
+      h3
+        b Summary
       p #{book.search_description}
     if book.owner_description
-      h3(style='font-weight: bold') Owner notes
+      h3
+        b Owner notes
       p #{book.owner_description}  
