@@ -18,7 +18,7 @@ block content
         - }
       p  
       p This book is owned by 
-        a(style='color: #d83c30', href='/profile/' + owner_id) #{owner_name}
+        a(style='color: #d83c30', href='/profile/' + book.owner._id) #{owner_name}
     .col-md-2#detail-menu
       if isOwners
         ul

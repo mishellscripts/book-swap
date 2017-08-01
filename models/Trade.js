@@ -5,8 +5,7 @@ const tradeSchema = new mongoose.Schema({
     offer: Object,
     sender: Object,
     receiver: Object,
-    sender_status: { type: Number, default: 0 },
-    receiver_status: { type: Number, default: 0 },
+    status: { type: Number, default: 0 },
     message: { type: String, required: true }
 }, {timestamps: true});
 

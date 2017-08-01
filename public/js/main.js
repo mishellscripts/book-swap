@@ -10,7 +10,8 @@
         $scope.bookImageUrl = '';
         $scope.selectedIndex = 0;
 
-        $scope.searchBook = ()=> {
+        $scope.searchBook = ($event)=> {
+          $event.preventDefault();
           const apiURL = 'https://www.googleapis.com/books/v1/volumes?q=' + $scope.title
           $http.get(apiURL).then(data=> {
             $scope.books = data.data.items;
@@ -18,7 +19,6 @@
         };
 
         $scope.updateBookId = (book, $index)=> {
-          console.log($scope.books);
           $scope.bookId = book._id;
           $scope.bookImageUrl = book.imageURL;
           $scope.selectedIndex = $index;

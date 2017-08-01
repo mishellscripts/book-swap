@@ -2,7 +2,7 @@ const Book = require('../models/Book');
 const User = require('../models/User');
 const Trade = require('../models/Trade');
 const mongoose = require('mongoose');
-var waterfall = require('async-waterfall');
+const async = require('async');
 
 /**
  * GET /account/trades
@@ -10,12 +10,12 @@ var waterfall = require('async-waterfall');
  */
 exports.getUserTrades = (req, res, next)=> {
   const userId = mongoose.Types.ObjectId(req.user._id);
-  Trade.find({'sender._id': userId, receiver_status: 0}, (err, tradesSentIncomplete)=> {
+  Trade.find({'sender._id': userId, status: 0}, (err, tradesSentIncomplete)=> {
     if (err) return next(err);
-    Trade.find({'receiver._id': userId, receiver_status: 0}, (err, tradesReceivedIncomplete)=> {
+    Trade.find({'receiver._id': userId, status: 0}, (err, tradesReceivedIncomplete)=> {
       if (err) return next(err);
-      Trade.find({'receiver._id': userId, receiver_status: 1, sender_status: 1}, (err, tradesReceivedCompleted)=> {
-        Trade.find({'sender._id': userId, receiver_status: 1, sender_status: 1}, (err, tradesSentCompleted)=> {
+      Trade.find({'receiver._id': userId, status: 1}, (err, tradesReceivedCompleted)=> {
+        Trade.find({'sender._id': userId, status: 1}, (err, tradesSentCompleted)=> {
           res.render('trades/view', {
             tradesSent: tradesSentIncomplete, 
             tradesReceived: tradesReceivedIncomplete,
@@ -52,16 +52,20 @@ exports.getSendTrade = (req, res, next)=> {
           res.json('Book is not up for trade');
         } else {
           // Check if trade exists with user
-          Trade.findOne({'sender._id': userId, 'receiver._id': book.owner._id, 'book._id': book._id}, (err, trade)=> {
-            if (trade) {
-              res.redirect('/trade/' + trade._id);
-              console.log('happens');
-            } else {
-              User.findById(book.owner, (err, owner)=> {
-              if (err) return next(err);
-                res.render('trades/request', {book: book, receiver: owner, sender: req.user});
-              }); 
-            }
+          Trade.findOne({'sender._id': userId, 'receiver._id': book.owner._id, 'book._id': book._id}, (err, trade1)=> {
+            Trade.findOne({'sender._id': book.owner._id, 'receiver._id': userId, 'offer._id': book._id}, (err, trade2)=> {
+              if (trade1) {
+                res.redirect('/trade/' + trade1._id);
+              } else if (trade2) {
+                res.redirect('/trade/' + trade2._id);
+              } 
+              else {
+                User.findById(book.owner, (err, owner)=> {
+                if (err) return next(err);
+                  res.render('trades/request', {book: book, receiver: owner, sender: req.user});
+                }); 
+              }
+            });
           });
         }
       });
@@ -87,8 +91,7 @@ exports.getSendTrade = (req, res, next)=> {
 
   const trade = new Trade({
     sender: req.user,
-    message: req.body.message,
-    sender_status: 1
+    message: req.body.message
   });
 
   User.findById(req.body.receiverId, (err, receiver)=> {
@@ -119,8 +122,7 @@ exports.getTradeDetail = (req, res, next)=> {
     if (err) return next(err);
     res.render('trades/detail', {
       trade: trade, 
-      isSender: req.user.id == trade.sender._id,
-      isComplete: trade.receiver_status == 1 && trade.sender_status == 1
+      isSender: req.user.id == trade.sender._id
     });
   });
 };
@@ -131,42 +133,38 @@ exports.getTradeDetail = (req, res, next)=> {
  */
  exports.acceptTrade = (req, res, next)=> {
    Trade.findById(req.params.tradeid, (err, trade)=> {
-    waterfall(()=> {
-      // Update trade status
-      if (err) return next(err);
-      const isSender =  req.user.id == trade.sender._id;
-      if (isSender && trade.sender_status == 0) {
-        trade.sender_status = 1;
-      } else if (!isSender && trade.receiver_status == 0) {
-        trade.receiver_status = 1;
-      }
+    async.waterfall([callback=>{
+      // Update trade and book details
+      trade.status = 1;
       trade.save(err=> {
         if (err) return next(err);
+        Book.findByIdAndUpdate(trade.book._id, {$set: {owner: trade.sender}}, {upsert: true});
+        Book.findByIdAndUpdate(trade.offer._id, {$set: {owner: trade.receiver}}, {upsert: true});
       });
+      callback(null);
     }, ()=> {
-      // Exchange books
-      if (trade.sender.status == 1 && trade.receiver_status == 1) {
-        req.flash('success', { msg: 'Trade complete!' });
-        //console.log(1);
+      // Update user details
+      // Exchange books between users
+      User.findByIdAndUpdate(trade.sender._id, {
+        $pull: {books: {_id: trade.offer._id}},
+      }, err=> {
         User.findByIdAndUpdate(trade.sender._id, {
-          $pull: {books: {_id: trade.offer._id}},
-          $push: {books: {_id: trade.book._id}}
+          $push: {books: trade.book}
         }, err=> {
-          if (err) console.log(err);
-          //console.log(2);
           User.findByIdAndUpdate(trade.receiver._id, {
             $pull: {books: {_id: trade.book._id}},
-            $push: {books: {_id: trade.offer._id}}
-          }, (err)=> {
-            //console.log(3);
-            if (err) console.log(err);
-              res.json(trade);
-              //res.redirect('/trade/' + req.params.tradeid);
+          }, err=> {
+          User.findByIdAndUpdate(trade.receiver._id, {
+            $push: {books: trade.offer}
+            }, err=> {
+              req.flash('success', { msg: 'Trade complete!' });
+              res.redirect('/trade/' + req.params.tradeid);
             });
+          });
         });
-      }
-    });
-   });
+      });
+    }]);
+  });
  };
 
  /**

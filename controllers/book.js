@@ -51,7 +51,6 @@ exports.getBookDetail = (req, res, next)=> {
   Book.findById(req.params.bookid, (err, result)=> {
     User.findById(result.owner, (err, user)=> {
       if (err) return next(err);
-      console.log(result.owner);
       res.render('books/detail', {
         book: result, 
         owner_name: user.profile.full_name || user.email, 
