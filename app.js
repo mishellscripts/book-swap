@@ -139,6 +139,7 @@ app.get('/trade/for/:bookid', passportConfig.isAuthenticated, tradeController.ge
 app.post('/trade/for/:bookid', passportConfig.isAuthenticated, tradeController.postSendTrade);
 app.get('/trade/:tradeid', passportConfig.isAuthenticated, tradeController.getTradeDetail);
 app.get('/trade/accept/:tradeid', passportConfig.isAuthenticated, tradeController.acceptTrade);
+app.get('/trade/cancel/:tradeid', passportConfig.isAuthenticated, tradeController.cancelTrade);
 
 /**
  * OAuth authentication routes. (Sign in)

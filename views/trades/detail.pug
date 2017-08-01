@@ -13,15 +13,21 @@ block content
       .col-md-6
         #trade-menu.text-center
           if trade.sender_status
-            h2 You have accepted the trade
-            p.lead Waiting on #{trade.receiver.profile.full_name} to accept the trade
-            i.fa.fa-check-circle-o.fa-5x.green(aria-hidden='true')
-            i.fa.fa-spinner.fa-5x.gray(aria-hidden='true')
+            if isComplete
+              h2 Trade is complete as of 
+              p.lead #{trade.updatedAt}
+              i.fa.fa-check-circle-o.fa-5x.green(aria-hidden='true')
+            else
+              h2 You have accepted the trade
+              p.lead Waiting on #{trade.receiver.profile.full_name} to accept the trade
+              i.fa.fa-check-circle-o.fa-5x.green(aria-hidden='true')
+              i.fa.fa-spinner.fa-5x.gray(aria-hidden='true')
           else
             h2 Are you sure you would like to trade?
             i.fa.fa-check-circle-o.fa-4x.green.clickable(aria-hidden='true')
             i.fa.fa-times-circle-o.fa-4x.red.clickable(aria-hidden='true')
-        button.btn.btn-danger.center-block(type='submit', onclick="location.href='/trade/cancel/" + trade._id + "'") Cancel trade
+        if !isComplete
+          button.btn.btn-danger.center-block(type='submit', onclick="location.href='/trade/cancel/" + trade._id + "'") Cancel trade
       .col-md-2
         img(src=trade.book.imageURL)
       .col-md-1
@@ -40,12 +46,18 @@ block content
       .col-md-6
         #trade-menu.text-center
           if trade.receiver_status
-            h2 You have accepted the trade
-            p.lead Waiting on #{trade.receiver.profile.full_name} to accept the trade
-            i.fa.fa-check-circle-o.fa-5x.green(aria-hidden='true')
-            i.fa.fa-spinner.fa-5x.gray(aria-hidden='true')
+            if isComplete
+              h2 Trade is complete as of 
+              p.lead #{trade.updatedAt}
+              i.fa.fa-check-circle-o.fa-5x.green(aria-hidden='true')
+            else
+              h2 You have accepted the trade
+              p.lead Waiting on #{trade.receiver.profile.full_name} to accept the trade
+              i.fa.fa-check-circle-o.fa-5x.green(aria-hidden='true')
+              i.fa.fa-spinner.fa-5x.gray(aria-hidden='true')
           else
             h2 #{trade.sender.profile.full_name} has sent you a trade
+            p.lead #{trade.message}
             p.lead Do you wish to accept the trade?
             a(href='/trade/accept/' + trade._id) 
               i.fa.fa-check-circle-o.fa-4x.green(aria-hidden='true')

@@ -51,5 +51,6 @@ block content
         b Trades completed (#{tradesCompleted.length})
       if tradesCompleted.length
         each tc in tradesCompleted
-          a(href='/trade/' + tc._id)
-            | #{tc.updatedAt}
+          p
+            a(href='/trade/' + tc._id)
+              | #{tc.updatedAt}
