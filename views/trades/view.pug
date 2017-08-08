@@ -13,15 +13,17 @@ block content
         each tr in tradesReceived
           a(href='/trade/' + tr._id)
             .trade.row
-              li
+              .col-md-4
                 p
-                  b #{tr.offer.title}
-                p #{tr.offer.author}
+                  b= tr.offer.title.substr(0,30)
+                p= tr.offer.author.substr(0,30)
                 img(src=tr.offer.imageURL)
-              li
+              .col-md-4.text-center
+                i.fa.fa-exchange.fa-4x(aria-hidden='true')
+              .col-md-4
                 p
-                  b #{tr.book.title}
-                p #{tr.book.author}
+                  b= tr.book.title.substr(0,30)
+                p= tr.book.author.substr(0,30)
                 img(src=tr.book.imageURL)
       else
         p You do not have any incoming trades.
@@ -32,15 +34,17 @@ block content
         each ts in tradesSent
           a(href='/trade/' + ts._id)
             .trade.row
-              li
+              .col-md-4
                 p(style='font-weight: ')
-                  | #{ts.book.title}
-                p #{ts.book.author}
+                  b= ts.book.title.substr(0,30)
+                p= ts.book.author.substr(0,30)
                 img(src=ts.book.imageURL)
-              li
+              .col-md-4
+                i.fa.fa-exchange.fa-4x(aria-hidden='true')
+              .col-md-4
                 p
-                  b #{ts.offer.title}
-                p #{ts.offer.author}
+                  b= ts.offer.title.substr(0,30)
+                p= ts.offer.author.substr(0,30)
                 img(src=ts.offer.imageURL)
       else
         p You do not have any outgoing trades.

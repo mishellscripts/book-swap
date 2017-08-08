@@ -6793,24 +6793,26 @@ textarea {
   #detail-menu i {
     padding-left: 10px; }
 
+#trade-container {
+  margin-top: 10%; }
+
 #trade-menu {
   border: 1px solid rgba(0, 0, 0, 0.2);
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+  margin-top: 10%; }
   #trade-menu i {
     padding: 10px; }
-
-#trade-container {
-  margin-top: 15%; }
+  #trade-menu .trade-message {
+    background: rgba(0, 0, 0, 0.05);
+    width: 50%;
+    position: relative;
+    left: 25%; }
 
 .trade-list .trade {
   border: 1px solid rgba(0, 0, 0, 0.2);
-  margin: 20px 0px; }
-  .trade-list .trade li {
-    list-style: none;
-    margin: 2% 5%; }
-  .trade-list .trade > :nth-child(1) {
-    float: left; }
-  .trade-list .trade > :nth-child(2) {
-    float: right; }
+  padding: 10px 5px; }
+  .trade-list .trade i {
+    color: #d83c30;
+    margin-top: 20%; }
   .trade-list .trade img {
     width: 50px; }

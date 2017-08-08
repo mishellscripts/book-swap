@@ -3,12 +3,13 @@ extends ../layout
 block content
   .row#trade-container
     if isSender
-      .col-md-3
+      .col-md-2
         h3 Your
-        h4
-          b #{trade.offer.title}
-        img(src=trade.offer.imageURL)
-      .col-md-6
+        a(href='/book/' + trade.book._id)
+          h4
+            b #{trade.offer.title}
+            img(src=trade.offer.imageURL)
+      .col-md-8
         #trade-menu.text-center
           if trade.status
             h2 Trade is complete as of 
@@ -16,23 +17,27 @@ block content
             i.fa.fa-check-circle-o.fa-5x.green(aria-hidden='true')
           else
             h2 You have accepted the trade
+            p.trade-message.text-center Message: #{trade.message}
             p.lead Waiting on #{trade.receiver.profile.full_name} to accept the trade
             i.fa.fa-check-circle-o.fa-5x.green(aria-hidden='true')
             i.fa.fa-spinner.fa-5x.gray(aria-hidden='true')
         if !trade.status
           button.btn.btn-danger.center-block(type='submit', onclick="location.href='/trade/cancel/" + trade._id + "'") Cancel trade
-      .col-md-3
-        h3 #{trade.receiver.profile.full_name}'s
-        h4
-          b #{trade.book.title}
-        img(src=trade.book.imageURL)
+      .col-md-2
+        a(href='/profile/' + trade.receiver._id)
+          h3 #{trade.receiver.profile.full_name}'s
+        a(href='/book/' + trade.book._id)
+          h4
+            b #{trade.book.title}
+            img(src=trade.book.imageURL)
     else
-      .col-md-3
+      .col-md-2
         h3 Your
-        h4
-          b #{trade.book.title}
-        img(src=trade.book.imageURL)
-      .col-md-6
+        a(href='/book/' + trade.book._id)
+          h4
+            b #{trade.book.title}
+            img(src=trade.book.imageURL)
+      .col-md-8
         #trade-menu.text-center
           if trade.status
             h2 Trade is complete as of 
@@ -40,14 +45,15 @@ block content
             i.fa.fa-check-circle-o.fa-5x.green(aria-hidden='true')
           else
             h2 #{trade.sender.profile.full_name} has sent you a trade
-            p.lead #{trade.message}
+            p.trade-message.text-center Message: #{trade.message}
             p.lead Do you wish to accept the trade?
             a(href='/trade/accept/' + trade._id) 
               i.fa.fa-check-circle-o.fa-4x.green(aria-hidden='true')
             i.fa.fa-times-circle-o.fa-4x.red.clickable.decline(aria-hidden='true')
-      .col-md-3
-        h3 #{trade.sender.profile.full_name}'s
-        h4
-          b #{trade.offer.title}
-        p.lead #{trade.offer.author}
-        img(src=trade.offer.imageURL)       
+      .col-md-2
+        a(href='/profile/' + trade.sender._id)
+          h3 #{trade.sender.profile.full_name}'s
+        a(href='/book/' + trade.book._id)
+          h4
+            b #{trade.offer.title}
+            img(src=trade.offer.imageURL)

@@ -134,11 +134,18 @@ exports.getTradeDetail = (req, res, next)=> {
       trade.status = 1;
       trade.save(err=> {
         if (err) return next(err);
-        Book.findByIdAndUpdate(trade.book._id, {$set: {owner: trade.sender}}, {upsert: true});
-        Book.findByIdAndUpdate(trade.offer._id, {$set: {owner: trade.receiver}}, {upsert: true});
       });
       callback(null);
-    }, ()=> {
+    }, callback=> {
+      Book.findByIdAndUpdate(trade.book._id, {$set: {owner: trade.sender}}, {upsert: true}, (err,book)=> {
+        console.log(book);
+      });
+      Book.findByIdAndUpdate(trade.offer._id, {$set: {owner: trade.receiver}}, {upsert: true}, (err,book)=> {
+        console.log(book);
+      });
+      callback(null);
+    },
+    ()=> {
       // Update user details
       // Exchange books between users
       User.findByIdAndUpdate(trade.sender._id, {
