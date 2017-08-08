@@ -4,20 +4,28 @@ block links
 block content
   .row.main-intro
     p.lead A trading post for beloved books
-  .row.main-description.text-center
-    .col-sm-3
-      h2 Share
-      i.fa.fa-paper-plane-o.fa-5x(aria-hidden='true')
-      p Let others know about your beloved collection of books. Once you post books you've read, other users can look at your general likings and start meaningful trades.
-    .col-sm-3
-      h2 View
-      i.fa.fa-book.fa-5x(aria-hidden='true')
-      p Click on any book to view details including feedback from the book owner themselves. Be inspired to pick up a new book and start an adventure!
-    .col-sm-3
-      h2 Trade
-      i.fa.fa-exchange.fa-5x(aria-hidden='true')
-      p Convinced that you want that book? Request a trade with the owner immediately, offering them a book they may enjoy in return.
-    .col-sm-3
+  .row.main-description
+    a(href='/account/books')
+      .col-sm-1
+        i.fa.fa-paper-plane-o.fa-4x(aria-hidden='true')
+      .col-sm-5
+        h2 Share
+        p Let others know about your beloved collection of books. Once you post books you've read, other users can look at your general likings and start meaningful trades.
+    a(href='/view')
+      .col-sm-1
+        i.fa.fa-book.fa-4x(aria-hidden='true')
+      .col-sm-5
+        h2 View
+        p Click on any book to view details including feedback from the book owner themselves. Be inspired to pick up a new book and start an adventure!
+  .row.main-description
+    a(href='/view/tradable')
+      .col-sm-1
+        i.fa.fa-exchange.fa-4x(aria-hidden='true')
+      .col-sm-5
+        h2 Trade
+        p Convinced that you want that book? Request a trade with the owner immediately, offering them a book they may enjoy in return.
+    .col-sm-1
+      i.fa.fa-check-circle-o.fa-4x(aria-hidden='true')
+    .col-sm-5
       h2 Read
-      i.fa.fa-check-circle-o.fa-5x(aria-hidden='true')
       p Once you have received your book, enjoy! You may also repeat the process with the same book or keep it. Your choice!

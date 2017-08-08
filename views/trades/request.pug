@@ -15,9 +15,9 @@ block content
       input(type='hidden', name='receiverId', value=receiver._id)
       h4 Select from one of the following:
       #book-list
-        .col-md-2.book(ng-repeat='book in books', ng-class="{'book-selected': $index == selectedIndex}", ng-click='updateBookId(book, $index)')
-          img(ng-src='{{book.imageURL}}')
-        input.form-control(type='hidden', name='bookid', id='bookid', ng-model='bookId', value='{{bookId}}', required)
+        .col-md-2.book(ng-repeat='book in books', ng-click='updateBookId(book, $index)')
+          img(ng-src='{{book.imageURL}}', ng-class="{'book-selected': $index == selectedIndex}")
+        input.form-control(name='bookid', id='bookid', ng-model='bookId', value='{{bookId}}', required)
       .form-group
       label.col-sm-3.control-label(for='Message') Message
       .col-sm-7

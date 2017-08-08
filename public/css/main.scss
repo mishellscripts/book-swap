@@ -97,6 +97,9 @@ textarea {
 #book-list {
   display: flex;
   flex-wrap: wrap;
+  img {
+    padding: 5%;
+  }
   .book {
     cursor: pointer;
     margin: 2.5% 0%;

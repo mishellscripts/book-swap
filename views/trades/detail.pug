@@ -3,12 +3,10 @@ extends ../layout
 block content
   .row#trade-container
     if isSender
-      .col-md-1
-        h2 Your
-        h2
+      .col-md-3
+        h3 Your
+        h4
           b #{trade.offer.title}
-        p.lead #{trade.offer.author}
-      .col-md-2
         img(src=trade.offer.imageURL)
       .col-md-6
         #trade-menu.text-center
@@ -23,20 +21,16 @@ block content
             i.fa.fa-spinner.fa-5x.gray(aria-hidden='true')
         if !trade.status
           button.btn.btn-danger.center-block(type='submit', onclick="location.href='/trade/cancel/" + trade._id + "'") Cancel trade
-      .col-md-2
+      .col-md-3
+        h3 #{trade.receiver.profile.full_name}'s
+        h4
+          b #{trade.book.title}
         img(src=trade.book.imageURL)
-      .col-md-1
-        h2 #{trade.receiver.profile.full_name}'s
-        h2
-          b #{trade.book.title}
-        p.lead #{trade.book.author}
     else
-      .col-md-1
-        h2 Your
-        h2
+      .col-md-3
+        h3 Your
+        h4
           b #{trade.book.title}
-        p.lead #{trade.book.author}
-      .col-md-2 
         img(src=trade.book.imageURL)
       .col-md-6
         #trade-menu.text-center
@@ -51,10 +45,9 @@ block content
             a(href='/trade/accept/' + trade._id) 
               i.fa.fa-check-circle-o.fa-4x.green(aria-hidden='true')
             i.fa.fa-times-circle-o.fa-4x.red.clickable.decline(aria-hidden='true')
-      .col-md-2
-        img(src=trade.offer.imageURL)
-      .col-md-1
-        h2 #{trade.sender.profile.full_name}'s
-        h2
+      .col-md-3
+        h3 #{trade.sender.profile.full_name}'s
+        h4
           b #{trade.offer.title}
         p.lead #{trade.offer.author}
+        img(src=trade.offer.imageURL)       

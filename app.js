@@ -133,6 +133,7 @@ app.post('/new', passportConfig.isAuthenticated, bookController.postNewBook);
 app.get('/book/:bookid', bookController.getBookDetail);
 app.get('/profile/:userid', userController.getUserProfile);
 app.get('/view', bookController.getAllBooks);
+app.get('/view/tradable', bookController.getAllTradableBooks);
 app.get('/remove/:bookid', passportConfig.isAuthenticated, bookController.removeBook);
 app.get('/toggle/:bookid', passportConfig.isAuthenticated, bookController.toggleBookTradeStatus);
 app.get('/trade/for/:bookid', passportConfig.isAuthenticated, tradeController.getSendTrade);

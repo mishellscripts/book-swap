@@ -24,7 +24,7 @@ block content
                 p #{tr.book.author}
                 img(src=tr.book.imageURL)
       else
-        p Currently, you do not have any incoming trades
+        p You do not have any incoming trades.
     .col-md-6.trade-list
       h4
         b Trades you've sent to others (#{tradesSent.length})
@@ -43,7 +43,7 @@ block content
                 p #{ts.offer.author}
                 img(src=ts.offer.imageURL)
       else
-        p Currently, you do not have any outgoing trades
+        p You do not have any outgoing trades.
   hr
   .row
     .col-md-6.trade-list
@@ -54,3 +54,5 @@ block content
           p
             a(href='/trade/' + tc._id)
               | #{tc.updatedAt}
+      else  
+        p You do not have any completed trades.

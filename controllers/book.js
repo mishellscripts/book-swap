@@ -88,6 +88,21 @@ exports.getAllBooks = (req, res, next)=> {
 };
 
 /**
+ * GET /view/tradable
+ * Tradeable books page
+ */
+exports.getAllTradableBooks = (req, res, next)=> {
+  Book.find({up_for_trade: true}, (err, result)=> {
+    if (err) return next(err);
+    res.render('books/view', {
+      title: 'Books up for trade',
+      books: result,
+      description: ''
+    });
+  });
+};
+
+/**
  * GET /remove/bookid
  * Remove a book
  */

@@ -36,45 +36,41 @@ exports.getSendTrade = (req, res, next)=> {
   const userProfile = req.user.profile;
   const profileComplete = userProfile.full_name && userProfile.location.city && userProfile.location.state;
    
-  if (profileComplete) {
-    Book.findById(req.params.bookid, (err, book)=> {
-      if (err) return next(err);
-      
-      const userId = mongoose.Types.ObjectId(req.user._id);
-      // Find books user owns - check to see if > 0 
-      Book.find({'owner._id': userId, up_for_trade: 1}, (err, booksForTrade)=> {
-        if (booksForTrade.length == 0) {
-          req.flash('errors', { msg: 'You do not have any books up for trading' });
-          res.redirect('/account/books');
-        } else if (book.owner._id == req.user.id) {
-          res.json('You cannot trade with yourself');
-        } else if (book.up_for_trade == 0) {
-          res.json('Book is not up for trade');
-        } else {
-          // Check if trade exists with user
-          Trade.findOne({'sender._id': userId, 'receiver._id': book.owner._id, 'book._id': book._id}, (err, trade1)=> {
-            Trade.findOne({'sender._id': book.owner._id, 'receiver._id': userId, 'offer._id': book._id}, (err, trade2)=> {
-              if (trade1) {
-                res.redirect('/trade/' + trade1._id);
-              } else if (trade2) {
-                res.redirect('/trade/' + trade2._id);
-              } 
-              else {
-                User.findById(book.owner, (err, owner)=> {
-                if (err) return next(err);
-                  res.render('trades/request', {book: book, receiver: owner, sender: req.user});
-                }); 
-              }
-            });
+  Book.findById(req.params.bookid, (err, book)=> {
+    if (err) return next(err);
+    const userId = mongoose.Types.ObjectId(req.user._id);
+    // Find books user owns - check to see if > 0 
+    Book.find({'owner._id': userId, up_for_trade: 1}, (err, booksForTrade)=> {
+      if (booksForTrade.length == 0) {
+        req.flash('errors', { msg: 'You do not have any books up for trading' });
+        res.redirect('/account/books');
+      } else if (!profileComplete) {
+        req.flash('errors', { msg: 'Please complete your profile to enable trading.' });
+        res.redirect('/account');
+      } else if (book.owner._id == req.user.id) {
+        res.json('You cannot trade with yourself');
+      } else if (book.up_for_trade == 0) {
+        res.json('Book is not up for trade');
+      } else {
+        // Check if trade exists with user
+        Trade.findOne({'sender._id': userId, 'receiver._id': book.owner._id, 'book._id': book._id}, (err, trade1)=> {
+          Trade.findOne({'sender._id': book.owner._id, 'receiver._id': userId, 'offer._id': book._id}, (err, trade2)=> {
+            if (trade1) {
+              res.redirect('/trade/' + trade1._id);
+            } else if (trade2) {
+              res.redirect('/trade/' + trade2._id);
+            } 
+            else {
+              User.findById(book.owner, (err, owner)=> {
+              if (err) return next(err);
+                res.render('trades/request', {book: book, receiver: owner, sender: req.user});
+              }); 
+            }
           });
-        }
-      });
+        });
+      }
     });
-  }
-  else {
-    req.flash('errors', { msg: 'Please complete your profile to enable trading.' });
-    res.redirect('/account');
-  }
+  });
 }
 
 /**

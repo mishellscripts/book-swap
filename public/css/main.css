@@ -6767,6 +6767,8 @@ textarea {
 #book-list {
   display: flex;
   flex-wrap: wrap; }
+  #book-list img {
+    padding: 5%; }
   #book-list .book {
     cursor: pointer;
     margin: 2.5% 0%; }
