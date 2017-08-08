@@ -1,7 +1,5 @@
 # Book Swap
 
-## Overview
-
 Book swap is an application where users can catalogue their books online and trade books with other users to maximize their reading experiences. 
 
 Demo: https://book-swapp.herokuapp.com/
